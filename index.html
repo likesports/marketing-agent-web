@@ -185,12 +185,12 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 18px; flex-shrink: 0;
         }
-        .card-emoji.cyan { background: var(--cyan-light); }
-        .card-emoji.teal { background: var(--teal-light); }
-        .card-emoji.purple { background: var(--purple-light); }
-        .card-emoji.orange { background: var(--orange-light); }
-        .card-emoji.blue { background: var(--blue-light); }
-        .card-emoji.pink { background: var(--pink-light); }
+        .card-emoji-cyan { background: var(--cyan-light); }
+        .card-emoji-teal { background: var(--teal-light); }
+        .card-emoji-purple { background: var(--purple-light); }
+        .card-emoji-orange { background: var(--orange-light); }
+        .card-emoji-blue { background: var(--blue-light); }
+        .card-emoji-pink { background: var(--pink-light); }
 
         .card-title {
             font-size: 14px; font-weight: 700; line-height: 1.4; color: var(--text);
@@ -552,11 +552,11 @@ function renderAgentCards(containerId, agents) {
     container.innerHTML = agents.map(agent => `
         <div class="agent-card" onclick="onAgentTap('${agent.id}')">
             <div class="card-top">
-                <div class="card-emoji ${agent.color}">${agent.emoji}</div>
+                <div class="card-emoji card-emoji-${agent.color}">${agent.emoji}</div>
                 <div class="card-title">${agent.name}</div>
             </div>
             <div class="card-desc">${agent.desc}</div>
-            <div class="card-link">
+            <div class="card-link" onclick="event.stopPropagation(); onAgentTap('${agent.id}')">
                 <span>进入智能体</span>
                 <span class="link-arrow">&rarr;</span>
             </div>
@@ -568,7 +568,7 @@ function renderSelectorCards(containerId, agents) {
     const container = document.getElementById(containerId);
     container.innerHTML = agents.map(agent => `
         <div class="selector-card" onclick="selectAgent('${agent.id}')">
-            <div class="sc-emoji card-emoji ${agent.color}">${agent.emoji}</div>
+            <div class="sc-emoji card-emoji card-emoji-${agent.color}">${agent.emoji}</div>
             <span class="sc-name">${agent.name}</span>
             <span class="sc-desc">${agent.desc}</span>
         </div>
@@ -616,7 +616,7 @@ function selectAgent(agentId) {
     document.getElementById('chatNavbar').style.display = 'flex';
     document.getElementById('chatNavbarTitle').textContent = agent.name;
     document.getElementById('agentInfoBar').style.display = 'flex';
-    document.getElementById('agentInfoIcon').className = 'agent-info-icon card-emoji ' + agent.color;
+    document.getElementById('agentInfoIcon').className = 'agent-info-icon card-emoji card-emoji-' + agent.color;
     document.getElementById('agentInfoIcon').textContent = agent.emoji;
     document.getElementById('agentInfoName').textContent = agent.name;
     document.getElementById('agentInfoDesc').textContent = agent.desc;
